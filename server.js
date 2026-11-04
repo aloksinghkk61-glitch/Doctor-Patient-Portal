@@ -142,14 +142,7 @@ app.get('/healthz', (_, res) => res.send('ok'));
       if (u) await q('INSERT INTO patients(id,full_name,email) VALUES($1,$2,$3)', [u.id, 'Care Team', e.toLowerCase()]);
     }
   } catch (err) {
-    console.error("Failed to run schema initialization:", err);
+    console.error('Schema initialization failed:', err);
   }
+  app.listen(process.env.PORT || 3000, () => console.log('Portal running'));
 })();
- // This tells your framework what to display at the home URL
-app.get('/', (req, res) => {
-  res.status(200).send('Doctor-Patient Portal Server is online and running successfully!');
-});
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running securely on port ${PORT}`);
-});
