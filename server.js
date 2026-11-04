@@ -140,7 +140,8 @@ app.get('/healthz', (_, res) => res.send('ok'));
     const u = (await q("INSERT INTO users(email,password_hash,role) VALUES($1,$2,'doctor') ON CONFLICT(email) DO NOTHING RETURNING id", [e.toLowerCase(), await bcrypt.hash(p, 12)])).rows[0];
     if (u) await q('INSERT INTO patients(id,full_name,email) VALUES($1,$2,$3)', [u.id, 'Care Team', e.toLowerCase()]);
   }
+  })();
  // This tells your framework what to display at the home URL
 app.get('/', (req, res) => {
   res.status(200).send('Doctor-Patient Portal Server is online and running successfully!');
-}));
+});
