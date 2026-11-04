@@ -143,4 +143,4 @@ app.get('/healthz', (_, res) => res.send('ok'));
  // This tells your framework what to display at the home URL
 app.get('/', (req, res) => {
   res.status(200).send('Doctor-Patient Portal Server is online and running successfully!');
-});
+})();
