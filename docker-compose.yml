@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: portal
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change-me}
+      POSTGRES_DB: portal
+    volumes: [pgdata:/var/lib/postgresql/data]
+  app:
+    build: .
+    depends_on: [db]
+    ports: ["3000:3000"]
+    environment:
+      DATABASE_URL: postgres://portal:${DB_PASSWORD:-change-me}@db:5432/portal
+      JWT_SECRET: ${JWT_SECRET}
+      SEED_DOCTOR_EMAIL: ${SEED_DOCTOR_EMAIL}
+      SEED_DOCTOR_PASSWORD: ${SEED_DOCTOR_PASSWORD}
+      NODE_ENV: ${NODE_ENV:-development}
+volumes:
+  pgdata:
